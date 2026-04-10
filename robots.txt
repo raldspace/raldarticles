@@ -1,0 +1,10 @@
+# robots.txt for Hudumika.co.ke
+User-agent: *
+Allow: /
+
+# Sitemap location
+Sitemap: https://hudumika.co.ke/sitemap.xml
+
+# Disable crawling of admin or private areas (if any)
+# Disallow: /admin/
+# Disallow: /private/
