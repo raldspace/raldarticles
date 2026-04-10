@@ -178,24 +178,23 @@ const Utils = {
   }
 };
 
-// Add this new function to main.js
 function initNavHighlighting() {
-  const currentPath = window.location.pathname;
+  const currentPath = window.location.pathname.replace(/\.html$/, '').replace(/\/$/, '') || '/';
   const navLinks = document.querySelectorAll('.nav-link, .mobile-nav-link');
   
   navLinks.forEach(link => {
-    const href = link.getAttribute('href');
+    let href = link.getAttribute('href');
+    if (!href) return;
+
+    let normalizedHref = href.split('#')[0].replace(/\.html$/, '').replace(/\/$/, '') || '/';
     
-    // Remove any existing active classes
     link.classList.remove('text-blue-600', 'bg-blue-50');
     link.classList.add('text-gray-700');
     
-    // Check if current page matches this link
-    if (href === currentPath || 
-        (currentPath === '/' && href === '/index.html') ||
-        (currentPath.endsWith('index.html') && href === currentPath) ||
-        (currentPath.startsWith('/articles') && href === '/articles/index.html') ||
-        (currentPath.startsWith('/partners') && href === '/partners/index.html')) {
+    const isExactMatch = currentPath === normalizedHref;
+    const isDirectoryMatch = normalizedHref !== '/' && currentPath.startsWith(normalizedHref);
+
+    if (isExactMatch || isDirectoryMatch) {
       link.classList.add('text-blue-600', 'bg-blue-50');
       link.classList.remove('text-gray-700');
     }
